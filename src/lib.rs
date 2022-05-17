@@ -63,6 +63,8 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
     router
         .post_async("/listen", |mut req, ctx| async move {
             let webhook_url = ctx.var("WEBHOOK_URL")?.to_string();
+            let message = ctx.var("MESSAGE")?.to_string();
+
             let data = req.json().await?;
             match data {
                 RequestJson::Verification(data) => {
@@ -80,11 +82,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
                         &webhook_url,
                         RequestInit::new().with_method(Method::Post).with_body(Some(
                             JsValue::from_str(&serde_json::to_string(&json!({
-                                "text":
-                                    format!(
-                                        "안녕하세요, <@{}>!, GraphQL Korea에 오신걸 환영해요 😆",
-                                        user.id
-                                    )
+                                "text": message.replace("@{id}", &user.id),
                             }))?),
                         )),
                     )?)
