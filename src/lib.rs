@@ -82,7 +82,7 @@ pub async fn main(req: Request, env: Env, _ctx: worker::Context) -> Result<Respo
                         &webhook_url,
                         RequestInit::new().with_method(Method::Post).with_body(Some(
                             JsValue::from_str(&serde_json::to_string(&json!({
-                                "text": message.replace("@{id}", &user.id),
+                                "text": message.replace("{id}", &user.id),
                             }))?),
                         )),
                     )?)

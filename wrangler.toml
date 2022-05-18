@@ -6,7 +6,7 @@ compatibility_date = "2022-01-20"
 
 [vars]
 WORKERS_RS_VERSION = "0.0.9"
-# @{id}가 사용자 ID로 치환됩니다.
+# {id}가 사용자 ID로 치환됩니다.
 MESSAGE = "안녕하세요, <@{id}>!"
 WEBHOOK_URL = ""
 
